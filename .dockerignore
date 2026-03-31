@@ -1,0 +1,62 @@
+# Build files
+dist/
+build/
+*.tgz
+
+# Development
+.replit-artifact/
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Dependencies
+node_modules/
+pnpm-store/
+
+# Git
+.git/
+.gitignore
+.gitattributes
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Logs
+*.log
+logs/
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Documentation (optional)
+README.md
+PNPM-BUILD-GUIDE.md
+DEPLOYMENT.md
+
+# CI/CD
+.github/
+.gitlab-ci.yml
+.travis.yml
+
+# Package managers
+package-lock.json
+yarn.lock
+
+# Development files
+*.md
+.editorconfig
+
+# Tests
+coverage/
+.nyc_output/
+
+# Temporary
+tmp/
+temp/
+cache/
+.cache/

@@ -1,0 +1,19 @@
+packages:
+  "framer-motion": "Animations and page transitions"
+  "react-hook-form": "Form state management"
+  "lucide-react": "Icons for dashboard and navigation"
+  "clsx": "Utility for constructing className strings"
+  "tailwind-merge": "Utility to safely merge Tailwind classes"
+  "date-fns": "Date formatting for history and user tables"
+
+images:
+  - path: "artifacts/ftth-calculator/public/images/login-bg.png"
+    description: "Abstract premium dark tech background with subtle glowing red fiber optic lines and deep shadows"
+    aspect_ratio: "16:9"
+  - path: "artifacts/ftth-calculator/public/images/logo-icon.png"
+    description: "Modern minimalist logo icon for optical fiber networking, sharp geometric shapes in red and white"
+    aspect_ratio: "1:1"
+
+notes:
+  - Assumes customFetch uses global fetch which we intercept in App.tsx to inject ftth_token from localStorage
+  - UI components are consolidated to speed up generation while maintaining completeness

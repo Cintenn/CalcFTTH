@@ -1,0 +1,10 @@
+{
+  "name": "@workspace/api-zod",
+  "version": "1.0.0",
+  "private": true,
+  "main": "src/generated/api.ts",
+  "types": "src/generated/api.ts",
+  "dependencies": {
+    "zod": "^3.23.8"
+  }
+}
