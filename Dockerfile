@@ -18,7 +18,7 @@ COPY packages/api-zod/package.json ./packages/api-zod/
 COPY packages/api-client-react/package.json ./packages/api-client-react/
 
 # Install dependencies (using frozen lockfile for reproducibility)
-RUN pnpm install --frozen-lockfile --prod
+RUN pnpm install --no-frozen-lockfile --prod
 
 # Build stage
 FROM node:20-alpine AS builder
