@@ -35,7 +35,7 @@ COPY . .
 COPY --from=dependencies /app/node_modules ./node_modules
 
 # Install dev dependencies for building
-RUN pnpm install --no-frozen-lockfile
+RUN CI=true pnpm install --no-frozen-lockfile
 
 # Type check
 RUN pnpm --recursive typecheck || true
