@@ -1,6 +1,5 @@
-# Ignore backend
+# Ignore backend (but NOT packages - needed for workspace dependencies!)
 api-server/
-packages/
 
 # Ignore dotenv files
 .env
@@ -14,6 +13,6 @@ packages/
 # Ignore source maps in production
 *.map
 
-# Ignore node_modules  
+# Ignore node_modules during deployment (Vercel installs dependencies)
 node_modules/
 .pnpm-store/
