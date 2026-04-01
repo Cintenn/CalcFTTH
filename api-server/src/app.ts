@@ -7,8 +7,28 @@ import { logger } from "./lib/logger";
 const app: Express = express();
 
 // Setup CORS with restricted origins in production
+// Allow all origins in development, specific origins in production
 const corsOptions = {
-  origin: process.env.CORS_ORIGIN || (process.env.NODE_ENV === "production" ? "" : "*"),
+  origin: (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) => {
+    const allowedOrigins = [
+      "http://localhost:5173",
+      "http://localhost:3000",
+      "http://127.0.0.1:5173",
+      "http://127.0.0.1:3000",
+      process.env.CORS_ORIGIN,
+      process.env.FRONTEND_URL,
+      "https://ftth-calculator.vercel.app",
+    ].filter(Boolean);
+
+    if (process.env.NODE_ENV !== "production") {
+      // Allow all origins in development
+      callback(null, true);
+    } else if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("CORS not allowed"));
+    }
+  },
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],

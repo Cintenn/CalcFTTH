@@ -4,6 +4,7 @@ import { eq } from "drizzle-orm";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { LoginBody } from "@workspace/api-zod";
+import { logger } from "../lib/logger.js";
 
 const router: IRouter = Router();
 
@@ -40,8 +41,11 @@ export function adminMiddleware(req: Request, res: Response, next: Function) {
 
 router.post("/login", async (req: Request, res: Response) => {
   try {
+    logger.debug({ body: req.body }, "Login request received");
+    
     const parseResult = LoginBody.safeParse(req.body);
     if (!parseResult.success) {
+      logger.warn({ errors: parseResult.error.errors }, "Login validation failed");
       res.status(400).json({ error: "Bad Request", message: "Invalid input" });
       return;
     }
@@ -51,6 +55,7 @@ router.post("/login", async (req: Request, res: Response) => {
     const [user] = await db.select().from(usersTable).where(eq(usersTable.username, username)).limit(1);
 
     if (!user) {
+      logger.debug({ username }, "User not found");
       res.status(401).json({ error: "Unauthorized", message: "Invalid credentials" });
       return;
     }
@@ -58,6 +63,7 @@ router.post("/login", async (req: Request, res: Response) => {
     const validPassword = await bcrypt.compare(password, user.passwordHash);
     
     if (!validPassword) {
+      logger.debug({ username }, "Invalid password");
       res.status(401).json({ error: "Unauthorized", message: "Invalid credentials" });
       return;
     }
