@@ -12,7 +12,7 @@
     "types": ["node", "vite/client"],
     "paths": {
       "@/*": ["./src/*"],
-      "@workspace/api-client-react": ["../packages/api-client-react/src"]
+      "@workspace/api-client-react": ["../packages/api-client-react/src/index.ts"]
     }
   }
 }
