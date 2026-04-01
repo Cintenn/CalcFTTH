@@ -34,15 +34,13 @@ FROM node:20-alpine
 
 WORKDIR /app
 
-RUN npm install -g pnpm
-
-ENV CI=true
 ENV NODE_ENV=production
 ENV PORT=3000
 
 COPY pnpm-workspace.yaml ./
 COPY pnpm-lock.yaml ./
 COPY .npmrc ./
+COPY tsconfig.base.json ./
 COPY package.json ./
 
 COPY packages/db/package.json ./packages/db/
@@ -51,9 +49,9 @@ COPY packages/api-client-react/package.json ./packages/api-client-react/
 
 COPY api-server/package.json ./api-server/
 
-RUN pnpm install --prod --no-frozen-lockfile
-
 COPY --from=builder /app/api-server/dist ./api-server/dist
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/packages ./packages
 
 RUN addgroup -g 1001 -S nodejs && \
     adduser -S nodejs -u 1001 && \

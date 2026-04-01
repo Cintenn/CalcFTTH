@@ -1,0 +1,16 @@
+{
+  "name": "@workspace/root",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@latest",
+  "workspaces": [
+    "api-server",
+    "ftth-calculator",
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "pnpm --recursive build",
+    "dev": "pnpm --filter api-server dev"
+  }
+}
