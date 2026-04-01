@@ -10,7 +10,8 @@
     "packages/*"
   ],
   "scripts": {
-    "build": "pnpm --recursive build",
+    "build": "pnpm --filter @workspace/ftth-calculator build",
+    "build:all": "pnpm --recursive build",
     "dev": "pnpm --filter api-server dev"
   }
 }
