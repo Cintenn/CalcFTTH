@@ -1,0 +1,8 @@
+{
+  "buildCommand": "pnpm --filter @workspace/ftth-calculator build",
+  "installCommand": "pnpm install --frozen-lockfile",
+  "outputDirectory": "./ftth-calculator/dist",
+  "env": {
+    "VITE_API_URL": "@vite_api_url"
+  }
+}

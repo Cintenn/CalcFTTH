@@ -53,7 +53,10 @@ window.fetch = async (input, init) => {
   const response = await originalFetch(url, init);
   
   // If API returns 401 Unauthorized, clear token and push to login
-  if (response.status === 401 && !inputStr.includes('/api/auth/login')) {
+  // Skip redirect for login and logout endpoints
+  if (response.status === 401 && 
+      !inputStr.includes('/api/auth/login') && 
+      !inputStr.includes('/api/auth/logout')) {
     localStorage.removeItem("ftth_token");
     window.location.href = "/login";
   }

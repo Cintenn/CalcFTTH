@@ -32,6 +32,17 @@ export const useGetMe = () => useQuery({
   queryFn: () => fetcher('/api/auth/me', { method: 'GET' })
 });
 
+export const useLogout = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: () => fetcher('/api/auth/logout', { method: 'POST' }),
+    onSuccess: () => {
+      queryClient.clear();
+      localStorage.removeItem("ftth_token");
+    }
+  });
+};
+
 export const useGetProjects = () => useQuery({
   queryKey: ['projects'],
   queryFn: () => fetcher('/api/projects', { method: 'GET' })

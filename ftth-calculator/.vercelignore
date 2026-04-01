@@ -1,0 +1,19 @@
+# Ignore backend
+api-server/
+packages/
+
+# Ignore dotenv files
+.env
+.env.local
+.env.*.local
+
+# Ignore git
+.git/
+.gitignore
+
+# Ignore source maps in production
+*.map
+
+# Ignore node_modules  
+node_modules/
+.pnpm-store/

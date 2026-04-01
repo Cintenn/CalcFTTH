@@ -12,7 +12,7 @@ import {
   Menu,
   X
 } from "lucide-react";
-import { useGetMe } from "@workspace/api-client-react";
+import { useGetMe, useLogout } from "@workspace/api-client-react";
 import { cn } from "@/lib/utils";
 import { Button } from "./ui";
 
@@ -20,10 +20,23 @@ export function Layout({ children }: { children: React.ReactNode }) {
   const [location, setLocation] = useLocation();
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const { data: user } = useGetMe({ query: { retry: false } });
+  const { mutate: logout, isPending: isLoggingOut } = useLogout();
 
-  const handleLogout = () => {
-    localStorage.removeItem("ftth_token");
-    window.location.href = "/login";
+  const handleLogout = async () => {
+    logout(undefined, {
+      onSuccess: () => {
+        setTimeout(() => {
+          window.location.href = "/login";
+        }, 100);
+      },
+      onError: () => {
+        // If logout API fails, still clear token and redirect
+        localStorage.removeItem("ftth_token");
+        setTimeout(() => {
+          window.location.href = "/login";
+        }, 100);
+      }
+    });
   };
 
   const navItems = [
@@ -88,9 +101,14 @@ export function Layout({ children }: { children: React.ReactNode }) {
               <span className="text-xs text-sidebar-foreground/60">{user?.role}</span>
             </div>
           </div>
-          <Button variant="ghost" className="w-full text-sidebar-foreground hover:text-white hover:bg-sidebar-accent justify-start" onClick={handleLogout}>
+          <Button 
+            variant="ghost" 
+            className="w-full text-sidebar-foreground hover:text-white hover:bg-sidebar-accent justify-start" 
+            onClick={handleLogout}
+            disabled={isLoggingOut}
+          >
             <LogOut className="w-5 h-5 mr-3 opacity-70" />
-            Logout
+            {isLoggingOut ? "Logging out..." : "Logout"}
           </Button>
         </div>
       </aside>
