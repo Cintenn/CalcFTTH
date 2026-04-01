@@ -2,6 +2,7 @@
   "name": "@workspace/api-zod",
   "version": "1.0.0",
   "private": true,
+  "packageManager": "pnpm@10.1.0",
   "main": "src/generated/api.ts",
   "types": "src/generated/api.ts",
   "dependencies": {
