@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
-  "packageManager": "pnpm@latest",
+  "packageManager": "pnpm@10",
   "workspaces": [
     "api-server",
     "ftth-calculator",
