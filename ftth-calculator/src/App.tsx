@@ -27,10 +27,21 @@ const queryClient = new QueryClient({
   }
 });
 
-// Global Fetch Interceptor to inject the ftth_token seamlessly into Orval's generated client
+// API Configuration
+const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
+
+// Global Fetch Interceptor to inject the ftth_token and API URL
 const originalFetch = window.fetch;
 window.fetch = async (input, init) => {
+  const inputStr = input.toString();
   const token = localStorage.getItem("ftth_token");
+  
+  // Prepend API base URL to relative URLs
+  let url = inputStr;
+  if (inputStr.startsWith('/api/')) {
+    url = `${API_BASE_URL}${inputStr}`;
+  }
+  
   if (token) {
     init = init || {};
     init.headers = {
@@ -39,10 +50,10 @@ window.fetch = async (input, init) => {
     };
   }
   
-  const response = await originalFetch(input, init);
+  const response = await originalFetch(url, init);
   
   // If API returns 401 Unauthorized, clear token and push to login
-  if (response.status === 401 && !input.toString().includes('/api/auth/login')) {
+  if (response.status === 401 && !inputStr.includes('/api/auth/login')) {
     localStorage.removeItem("ftth_token");
     window.location.href = "/login";
   }

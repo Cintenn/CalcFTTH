@@ -1,5 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 
+const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
+
 const getHeaders = () => {
   const token = typeof window !== 'undefined' ? localStorage.getItem("ftth_token") : null;
   return {
@@ -9,7 +11,8 @@ const getHeaders = () => {
 };
 
 const fetcher = async (url: string, options: RequestInit) => {
-  const res = await fetch(url, { ...options, headers: getHeaders() });
+  const fullUrl = `${API_BASE_URL}${url}`;
+  const res = await fetch(fullUrl, { ...options, headers: getHeaders() });
   if (!res.ok) {
     const error = await res.json().catch(() => ({}));
     throw new Error(error.message || `API Error: ${res.status}`);
