@@ -28,7 +28,9 @@ const queryClient = new QueryClient({
 });
 
 // API Configuration
-const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
+// In development we prefer using a relative base so Vite dev-server proxy can forward `/api` to the backend.
+// When `VITE_API_URL` is set (e.g. in production or custom env) it will be used instead.
+const API_BASE_URL = import.meta.env.VITE_API_URL || "";
 
 // Global Fetch Interceptor to inject the ftth_token and API URL
 const originalFetch = window.fetch;

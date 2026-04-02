@@ -1,3 +1,15 @@
+import dotenv from "dotenv";
+
+// Load local .env for development only if SESSION_SECRET isn't already set.
+// This avoids duplicate dotenv.config() calls in other modules (e.g. routes import 'dotenv/config').
+if (!process.env.SESSION_SECRET && !process.env.__DOTENV_LOADED) {
+  dotenv.config();
+  // mark as loaded to avoid re-running config in other module loads
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  process.env.__DOTENV_LOADED = "1";
+}
+
 import app from "./app";
 import { logger } from "./lib/logger";
 
